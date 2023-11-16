@@ -9,7 +9,6 @@ class Initializer(metaclass=Singleton):
     def __init__(self):
         self._tables = []
         self._create_directory(properties.CONFIG_DIRECTORY)
-        self._create_directory(properties.CONFIG_TABLES_DIRECTORY)
         self._create_json_file(TableTypeSerializer.DEFAULT_FILE_TYPE, 
                                TableTypeSerializer.DEFAULT_TYPE_MATCH)
 

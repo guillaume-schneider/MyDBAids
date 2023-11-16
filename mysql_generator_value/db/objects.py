@@ -1,8 +1,9 @@
-import db.blueprint as blueprint
+import blueprint as blueprint
 
 
 class Table:
-    def __init__(self) -> None:
+    def __init__(self, types_match: dict) -> None:
+        self._types_match = types_match
         attributes: dict[str, list] = {}
 
     def add_datas(self, name: str, data: list) -> None:
@@ -26,6 +27,9 @@ class Table:
     def has_data(self, name: str, data: object) -> bool:
         return data in self.attributes[name]
 
+    def get_types_match(self):
+        return self._types_match
+
     def __str__(self) -> str:
         return f"Table(attributes={self.attributes})"
     
@@ -33,19 +37,9 @@ class Table:
         return str(self)
 
 
-class TableMaker:
-    @staticmethod
-    def make(blueprint: blueprint.TableBlueprint) -> Table:
-        table = Table()
-        for (name, type) in blueprint.attributes.items():
-            attributes: list[type] = []
-            table.add_datas(name, attributes)
-        return table
-
-
 class Database:
-    def __init__(self, tables: list[Table]) -> None:
-        self._tables = tables
+    def __init__(self, tables: list[Table] = None) -> None:
+        self._tables = tables if tables is not None else []
 
     def add_table(self, table: Table) -> None:
         self._tables.append(table)

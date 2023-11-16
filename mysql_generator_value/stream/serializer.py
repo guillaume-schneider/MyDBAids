@@ -28,14 +28,17 @@ class TableTypeSerializer:
     def __init__(self) -> None:
         self._types: dict[str, str] = TableTypeSerializer.DEFAULT_TYPE_MATCH
 
-    def serialize(self, blueprint: blueprint.TableBlueprint) -> str:
+    def serialize(self, db_name: str, blueprint: blueprint.TableBlueprint) -> str:
+        if not os.path.exists(f"{properties.CONFIG_DIRECTORY}/{db_name}"):
+            os.mkdir(f"{properties.CONFIG_DIRECTORY}/{db_name}")
+
         self._serialize_types = {}
         self._types = self._get_default_types_match()
 
         for (name, type) in blueprint.attributes.items():
             self._serialize_types[name] = self._types[type]
 
-        file_path = f"{properties.CONFIG_TABLES_DIRECTORY}/{blueprint.name}.json"
+        file_path = f"{properties.CONFIG_DIRECTORY}/{db_name}/{blueprint.name}.json"
         if file_path not in os.listdir(properties.CONFIG_TABLES_DIRECTORY):
             self._create_json_file(file_path, self._serialize_types)
 
@@ -54,6 +57,6 @@ class DatabaseTypeSerializer(metaclass=utils.Singleton):
     def __init__(self) -> None:
         self._table_serializer = TableTypeSerializer()
 
-    def serialize(self, blueprints: list[blueprint.TableBlueprint]) -> None:
+    def serialize(self, db_name: str, blueprints: list[blueprint.TableBlueprint]) -> None:
         for blueprint in blueprints:
-            self._table_serializer.serialize(blueprint)
+            self._table_serializer.serialize(db_name, blueprint)
