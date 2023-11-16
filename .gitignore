@@ -1,0 +1,5 @@
+venv
+__pycache__
+config
+mysql_generator_value.egg-info
+build
