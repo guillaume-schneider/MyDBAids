@@ -1,5 +1,5 @@
-import objects
-import stream.types as types
+import objects as objects
+import generator.stream.types as types
 
 
 class TableMaker:

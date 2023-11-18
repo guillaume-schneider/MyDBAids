@@ -1,6 +1,3 @@
-import blueprint as blueprint
-
-
 class Table:
     def __init__(self, types_match: dict) -> None:
         self._types_match = types_match

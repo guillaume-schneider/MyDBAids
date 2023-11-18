@@ -1,8 +1,8 @@
 import objects
-from utils import Singleton
+from generator import utils
 import faker
 
-class TableGenerator(metaclass=Singleton):
+class TableGenerator(metaclass=utils.Singleton):
     def __init__(self):
         self._faker = faker.Faker()
 
@@ -17,4 +17,3 @@ class DatabaseTableGenerator:
         database = objects.Database()
         for table in database.tables:
             TableGenerator.generate(table, nb_insertions)
-

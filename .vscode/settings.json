@@ -1,8 +1,0 @@
-{
-//     "python.analysis.extraPaths": [
-//         "./mysql-generator-value/db"
-//     ]
-    "python.analysis.extraPaths": [
-        "./mysql-generator-value/stream"
-    ]
-}

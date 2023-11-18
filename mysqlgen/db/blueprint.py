@@ -1,4 +1,5 @@
 import mysql.connector
+import mysqlgen.stream.types as types
 
 
 class TableBlueprint:
