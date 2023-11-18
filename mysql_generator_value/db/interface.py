@@ -1,8 +1,9 @@
-import blueprint as blueprint
+from blueprint import DatabaseBlueprintMaker
 import stream.serializer as serializer
 import db.maker as maker
 import generator as generator
 import connector.injector as injector
+import mysql.connector
 
 
 class DBInterface:
@@ -13,10 +14,16 @@ class DBInterface:
         self.database_name = database
         self.database = None
         self.serializer = serializer.DatabaseTypeSerializer()
-        self.blueprints = blueprint.DatabaseBlueprintMaker(self._get_config()) \
+
+        self.connection = mysql.connector.connect(user=self.user,
+                                                  password=self.password,
+                                                  host=self.host,
+                                                  database=self.database_name,
+                                                  raise_on_warnings=True)
+        self.blueprints = DatabaseBlueprintMaker(self._get_config(),
+                                                           self.connection) \
                                    .get_database_blueprint()
         self.injector = injector.Injector(self._get_config())
-        
 
     def change_database(self, database_name: str) -> None:
         self.database_name = database_name

@@ -2,6 +2,7 @@ import mysql.connector
 
 
 class TableBlueprint:
+    """Représente le schéma conceptuel d'une table dans une base de données."""
     def __init__(self, name: str, attributes: dict[str, str] = None) -> None:
         self.name = name
         self._attributes = attributes if attributes is not None else {}
@@ -19,10 +20,10 @@ class TableBlueprint:
     def get_attribute_type(self, name: str) -> type:
         return self._attributes[name]
     
-    def get_attribute_name(self, type: str) -> list[str]:
+    def get_attribute_name(self, data_type: str) -> list[str]:
         names = []
         for (name, attr_type) in self._attributes.items():
-            if attr_type == type:
+            if attr_type == data_type:
                 names.append(name)
         return names
 
@@ -34,13 +35,18 @@ class TableBlueprint:
 
 
 class TableBlueprintMaker:
-    def __init__(self, config: dict, cursor) -> None:
-        self.connection = mysql.connector.connect(**config)
+    """Classe pour créer un blueprint de table à partir d'une base de données MySQL."""
+    def __init__(self, config: dict, connection) -> None:
+        self.connection = connection
         self.cursor = self.connection.cursor()
         self.config = config
 
     def get_table_blueprint(self, table_name: str) -> TableBlueprint:
-        self.cursor.execute(self._get_column_query(table_name))
+        try:
+            self.cursor.execute(self._get_column_query(table_name))
+        except mysql.connector.Error as err:
+            print(f"Erreur lors de la requête SQL pour obtenir les colonnes de la table {table_name}: {err}")
+
         columns = self.cursor.fetchall()
         table_blueprint = TableBlueprint(table_name)
         for column in columns:
@@ -52,11 +58,18 @@ class TableBlueprintMaker:
                    FROM information_schema.COLUMNS
                    WHERE TABLE_SCHEMA = '{self.config['database']}' 
                          AND TABLE_NAME = '{table_name}'"""
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.cursor.close()
     
 
 class DatabaseBlueprintMaker:
-    def __init__(self, config: dict) -> None:
-        self.connection = mysql.connector.connect(**config)
+    """Classe pour créer un blueprint de base de données à partir d'une base de données MySQL."""
+    def __init__(self, config: dict, connection) -> None:
+        self.connection = connection
         self.cursor = self.connection.cursor()
         self.maker = TableBlueprintMaker(config, self.cursor)
         self.config = config
@@ -64,18 +77,23 @@ class DatabaseBlueprintMaker:
     def get_database_blueprint(self) -> list[TableBlueprint]:
         blueprints: list[TableBlueprint] = []
 
-        self.cursor.execute(self._get_table_query())
+        try:
+            self.cursor.execute(self._get_table_query())
+        except mysql.connector.Error as err:
+            print(f"Erreur lors de la requête SQL pour obtenir les tables de la base de données: {err}")      
+  
         tables = self.cursor.fetchall()
-
         for table in tables:
             blueprints.append(self.maker.get_table_blueprint(table[0]))
         return blueprints
-
-    def close(self):
-        self.cursor.close()
-        self.connection.close()
 
     def _get_table_query(self):
         return f"""SELECT TABLE_NAME
                 FROM information_schema.TABLES 
                 WHERE TABLE_SCHEMA = '{self.config['database']}'"""
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.cursor.close()

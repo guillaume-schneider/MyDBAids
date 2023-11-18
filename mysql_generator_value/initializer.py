@@ -1,5 +1,5 @@
 from utils import Singleton
-from parser.serializer import TableTypeSerializer
+from stream.serializer import TableTypeSerializer
 import properties
 import os
 import json

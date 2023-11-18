@@ -3,11 +3,8 @@ import mysql_generator_value.db.objects
 
 
 class Injector:
-    def __init__(self, config: dict) -> None:
-        self.connection = mysql.connector.connect(user=config['user'], 
-                                                  password=config['password'],
-                                                  host=config['host'],
-                                                  database=config['database'],)
+    def __init__(self, config: dict, connection) -> None:
+        self.connection = connection
         self.cursor = self.connection.cursor()
 
     def inject(self, database: objects.Database):
