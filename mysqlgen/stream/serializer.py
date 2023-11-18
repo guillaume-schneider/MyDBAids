@@ -8,12 +8,12 @@ import mysqlgen.properties as properties
 class TableTypeSerializer:
     DEFAULT_FILE_TYPE = f"{properties.CONFIG_DIRECTORY}/types.json"
     DEFAULT_TYPE_MATCH = {
-        "varchar": "lorem.paragraph",
-        "text": "lorem.paragraph",
-        "char": "lorem.paragraph",
-        "date": "date_time.date",
-        "datetime": "date_time.date",
-        "timestamp": "date_time.date_time",
+        "varchar": "paragraph",
+        "text": "paragraph",
+        "char": "paragraph",
+        "date": "date",
+        "datetime": "date",
+        "timestamp": "date",
         "decimal": "float",
         "double": "float",
         "float": "float",
@@ -61,3 +61,27 @@ class DatabaseTypeSerializer(metaclass=utils.Singleton):
     def serialize(self, db_name: str, blueprints: list[blueprint.TableBlueprint]) -> None:
         for blueprint in blueprints:
             self._table_serializer.serialize(db_name, blueprint)
+
+
+class TableTypeDeserializer:
+    def __init__(self) -> None:
+        pass
+
+    def deserialize(self, file: str) -> blueprint.TableBlueprint:
+        attributes: dict
+        with open(file, "r") as f:
+            attributes = json.load(f)
+        return blueprint.TableBlueprint(file.split("/")[-1].split(".")[0], attributes)
+
+
+class DatabaseTypeDeserializer(metaclass=utils.Singleton):
+    def __init__(self) -> None:
+        self._table_deserializer = TableTypeDeserializer()
+
+    def deserialize(self, db_name: str) -> list[blueprint.TableBlueprint]:
+        db_path = f"{properties.CONFIG_DIRECTORY}/{db_name}"
+        files = os.listdir(db_path)
+        res: list[blueprint.TableBlueprint] = []
+        for file in files:
+            res.append(self._table_deserializer.deserialize(f"{db_path}/{file}"))
+        return res

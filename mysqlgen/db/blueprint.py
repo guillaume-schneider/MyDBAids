@@ -63,7 +63,7 @@ class TableBlueprintMaker:
 
     def __exit__(self, exc_type, exc_value, traceback):
         self.cursor.close()
-    
+
 
 class DatabaseBlueprintMaker:
     """Classe pour créer un blueprint de base de données à partir d'une base de données MySQL."""

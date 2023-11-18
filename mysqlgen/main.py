@@ -3,9 +3,10 @@ from mysqlgen.db.interface import DBInterface
 
 
 def main():
-    DBInterface("root", "", "localhost", "firefighter").init()
+    interface = DBInterface("root", "", "localhost", "firefighter").init()
+    interface.inject(10)
 
  
 if "__main__" == __name__:
     Initializer()
-    main()
+    main(

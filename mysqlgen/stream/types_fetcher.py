@@ -3,6 +3,7 @@ import os
 import mysqlgen.properties as proprieties
 
 
+@DeprecationWarning
 class TableTypeFetcher:
     @staticmethod
     def fetch(db_name: str, table_name: str) -> dict:
@@ -10,6 +11,7 @@ class TableTypeFetcher:
             return json.load(file)
 
 
+@DeprecationWarning
 class DatabaseTypeFetcher:
     @staticmethod
     def fetch(db_name: str) -> list[dict]:

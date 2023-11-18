@@ -1,7 +1,9 @@
-import mysql.connector
+import mysqlgen.db.generator as generator
+import mysqlgen.db.blueprint as blueprint
 import mysqlgen.db.objects as objects
 
 
+@DeprecationWarning
 class Injector:
     def __init__(self, config: dict, cursor) -> None:
         self.cursor = cursor
@@ -29,3 +31,24 @@ class Injector:
 
     def _get_list_count(self, table: objects.Table) -> int:
         return table.attributes[0].__len__()
+
+
+class InjectorOnFly:
+    def __init__(self, cursor) -> None:
+        self.cursor = cursor
+    
+    def injectAll(self, blueprints: list[blueprint.TableBlueprint], nb_insertions: int):
+        for blueprint in blueprints:
+            self.injectByTable(blueprint, nb_insertions)
+
+    def injectByTable(self, blueprint: blueprint.TableBlueprint, nb_insertions: int):
+        sql_request = generator.DataGenerator().generate(blueprint, nb_insertions)
+        print(sql_request)
+        self.cursor.execute(sql_request)
+        self.cursor.commit()
+    
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.cursor.close()
