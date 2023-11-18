@@ -1,8 +1,8 @@
 import json
-import db.blueprint as blueprint
-import utils
+import mysqlgen.db.blueprint as blueprint
+import mysqlgen.utils as utils
 import os
-import properties
+import mysqlgen.properties as properties
 
 
 class TableTypeSerializer:
@@ -29,8 +29,9 @@ class TableTypeSerializer:
         self._types: dict[str, str] = TableTypeSerializer.DEFAULT_TYPE_MATCH
 
     def serialize(self, db_name: str, blueprint: blueprint.TableBlueprint) -> str:
-        if not os.path.exists(f"{properties.CONFIG_DIRECTORY}/{db_name}"):
-            os.mkdir(f"{properties.CONFIG_DIRECTORY}/{db_name}")
+        db_path = f"{properties.CONFIG_DIRECTORY}/{db_name}"
+        if not os.path.exists(db_path):
+            os.mkdir(db_path)
 
         self._serialize_types = {}
         self._types = self._get_default_types_match()
@@ -38,8 +39,8 @@ class TableTypeSerializer:
         for (name, type) in blueprint.attributes.items():
             self._serialize_types[name] = self._types[type]
 
-        file_path = f"{properties.CONFIG_DIRECTORY}/{db_name}/{blueprint.name}.json"
-        if file_path not in os.listdir(properties.CONFIG_TABLES_DIRECTORY):
+        file_path = f"{db_path}/{blueprint.name}.json"
+        if file_path not in os.listdir(db_path):
             self._create_json_file(file_path, self._serialize_types)
 
         return file_path

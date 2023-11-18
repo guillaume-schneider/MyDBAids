@@ -1,7 +1,8 @@
+@DeprecationWarning
 class Table:
     def __init__(self, types_match: dict) -> None:
         self._types_match = types_match
-        attributes: dict[str, list] = {}
+        self.attributes: dict[str, list] = {}
 
     def add_datas(self, name: str, data: list) -> None:
         self.attributes[name] = data
@@ -34,6 +35,7 @@ class Table:
         return str(self)
 
 
+@DeprecationWarning
 class Database:
     def __init__(self, tables: list[Table] = None) -> None:
         self._tables = tables if tables is not None else []

@@ -1,5 +1,4 @@
 import mysql.connector
-import mysqlgen.stream.types as types
 
 
 class TableBlueprint:
@@ -37,9 +36,8 @@ class TableBlueprint:
 
 class TableBlueprintMaker:
     """Classe pour créer un blueprint de table à partir d'une base de données MySQL."""
-    def __init__(self, config: dict, connection) -> None:
-        self.connection = connection
-        self.cursor = self.connection.cursor()
+    def __init__(self, config: dict, cursor) -> None:
+        self.cursor = cursor
         self.config = config
 
     def get_table_blueprint(self, table_name: str) -> TableBlueprint:
@@ -69,9 +67,8 @@ class TableBlueprintMaker:
 
 class DatabaseBlueprintMaker:
     """Classe pour créer un blueprint de base de données à partir d'une base de données MySQL."""
-    def __init__(self, config: dict, connection) -> None:
-        self.connection = connection
-        self.cursor = self.connection.cursor()
+    def __init__(self, config: dict, cursor) -> None:
+        self.cursor = cursor
         self.maker = TableBlueprintMaker(config, self.cursor)
         self.config = config
     

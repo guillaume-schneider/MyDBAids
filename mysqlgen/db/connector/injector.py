@@ -1,11 +1,10 @@
 import mysql.connector
-import mysql_generator_value.db.objects
+import mysqlgen.db.objects as objects
 
 
 class Injector:
-    def __init__(self, config: dict, connection) -> None:
-        self.connection = connection
-        self.cursor = self.connection.cursor()
+    def __init__(self, config: dict, cursor) -> None:
+        self.cursor = cursor
 
     def inject(self, database: objects.Database):
         for table in database.tables:

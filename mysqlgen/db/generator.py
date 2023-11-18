@@ -1,5 +1,5 @@
-import objects
-from generator import utils
+import mysqlgen.db.objects as objects
+import mysqlgen.utils as utils
 import faker
 
 class TableGenerator(metaclass=utils.Singleton):
