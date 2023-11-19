@@ -17,12 +17,23 @@ class DBInterface:
         self._init()
 
     def _init(self):
-        self.connection = mysql.connector.connect(user=self.user,
-                                                  password=self.password,
-                                                  host=self.host,
-                                                  database=self.database_name,
-                                                  raise_on_warnings=True,
-                                                  buffered=True)
+        try:
+            self.connection = mysql.connector.connect(user=self.user,
+                                                    password=self.password,
+                                                    host=self.host,
+                                                    database=self.database_name,
+                                                    raise_on_warnings=True,
+                                                    buffered=True)
+        except mysql.connector.Error as err:
+            if err.errno == mysql.connector.errorcode.ER_ACCESS_DENIED_ERROR:
+                print("Accès refusé. Vérifiez vos informations de connexion.")
+            elif err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
+                print("La base de données spécifiée n'existe pas.")
+            elif err.errno == 2055:
+                print("Erreur de connexion au serveur MySQL. Vérifiez votre configuration réseau.")
+            else:
+                print(f"Erreur inattendue: {err}")
+
         self.blueprints = blueprint.DatabaseBlueprintMaker(self._get_config(),
                                                            self.connection.cursor()) \
                                    .get_database_blueprint()
@@ -69,5 +80,7 @@ class DBInterface:
             'password': self.password,
             'host': self.host,
             'database': self.database_name,
-            'raise_on_warnings': True
+            'raise_on_warnings': True,
+            'max_allowed_packet': 1073741824,
+            'connect_timeout': 600
         }
