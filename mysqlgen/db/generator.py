@@ -1,11 +1,11 @@
 import random
 from typing import Any
 import mysqlgen.db.blueprint as blueprint
-import mysqlgen.utils as utils
+from mysqlgen.utils.pattern import Singleton
 import faker
 
 
-class DataGenerator(metaclass=utils.Singleton):
+class DataGenerator(metaclass=Singleton):
 
     def __init__(self) -> None:
         self.ID_COUNTER = 0
@@ -38,7 +38,7 @@ class DataGenerator(metaclass=utils.Singleton):
         return names[:-2]
 
 
-class _DataGeneratorMatcher(metaclass=utils.Singleton):
+class _DataGeneratorMatcher(metaclass=Singleton):
     def __init__(self) -> None:
         self._faker_gen = _FakerDataGenerator()
         self._raw_gen = _RawDataGenerator()

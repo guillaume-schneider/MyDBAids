@@ -9,4 +9,4 @@ def main():
  
 if "__main__" == __name__:
     Initializer()
-    main(
+    main()

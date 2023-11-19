@@ -10,7 +10,6 @@ def get_table_order(connection):
     # Obtenez la liste des noms de tables
     tables = [table[0] for table in cursor.fetchall()]
 
-    print("Tables :", tables)
     # Initialisez le graphe des dépendances
     dependency_graph = {}
 

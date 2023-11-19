@@ -1,9 +1,11 @@
 from mysqlgen.db import blueprint
-import mysqlgen.stream.serializer as serializer
+import mysqlgen.stream.blueprint as blueprintSerializer
+import mysqlgen.stream.dependency as dependencySerializer
 import mysqlgen.db.maker as maker
 import mysqlgen.db.generator as generator
 import mysqlgen.db.connector.injector as connectorInjector
 import mysql.connector
+
 
 
 class DBInterface:
@@ -12,7 +14,7 @@ class DBInterface:
         self.password = password
         self.host = host
         self.database_name = database
-        self.serializer = serializer.DatabaseTypeSerializer()
+        self.serializer = blueprintSerializer.DatabaseBlueprintSerializer()
 
         self.connection = mysql.connector.connect(user=self.user,
                                                   password=self.password,
@@ -22,19 +24,22 @@ class DBInterface:
         self.blueprints = blueprint.DatabaseBlueprintMaker(self._get_config(),
                                                            self.connection.cursor()) \
                                    .get_database_blueprint()
+        self.dependency_serializer = dependencySerializer.DependencySerializer(self.connection.cursor(), 
+                                                                               self.database_name)
         self.injector = connectorInjector.InjectorOnFly(self.connection.cursor())
 
     def change_database(self, database_name: str) -> None:
         self.database_name = database_name
 
     def init(self):
-        serializer.DatabaseTypeSerializer().serialize(self.database_name,
-                                                     self.blueprints)
+        blueprintSerializer.DatabaseBlueprintSerializer().serialize(self.database_name,
+                                                                    self.blueprints)
+        self.dependency_serializer.serialize()
         self.update()
         return self
  
     def update(self):
-        self.blueprints = serializer.DatabaseTypeDeserializer() \
+        self.blueprints = blueprintSerializer.DatabaseBlueprintDeserializer() \
                                     .deserialize(self.database_name)
 
     def inject(self, nb_insertions: int):

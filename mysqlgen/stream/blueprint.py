@@ -1,11 +1,12 @@
 import json
 import mysqlgen.db.blueprint as blueprint
-import mysqlgen.utils as utils
+from mysqlgen.utils.pattern import Singleton
 import os
 import mysqlgen.properties as properties
+from mysqlgen.utils import function
 
 
-class TableTypeSerializer:
+class TableBlueprintSerializer:
     DEFAULT_FILE_TYPE = f"{properties.CONFIG_DIRECTORY}/types.json"
     DEFAULT_TYPE_MATCH = {
         "varchar": "paragraph",
@@ -26,7 +27,7 @@ class TableTypeSerializer:
     }
 
     def __init__(self) -> None:
-        self._types: dict[str, str] = TableTypeSerializer.DEFAULT_TYPE_MATCH
+        self._types: dict[str, str] = TableBlueprintSerializer.DEFAULT_TYPE_MATCH
 
     def serialize(self, db_name: str, blueprint: blueprint.TableBlueprint) -> str:
         db_path = f"{properties.CONFIG_DIRECTORY}/{db_name}"
@@ -46,7 +47,7 @@ class TableTypeSerializer:
         return file_path
 
     def _get_default_types_match(self):
-        with open(TableTypeSerializer.DEFAULT_FILE_TYPE, "r") as f:
+        with open(TableBlueprintSerializer.DEFAULT_FILE_TYPE, "r") as f:
             return json.load(f)
 
     def _create_json_file(self, file: str, data) -> None:
@@ -54,16 +55,16 @@ class TableTypeSerializer:
             json.dump(data, f, indent=4)
 
 
-class DatabaseTypeSerializer(metaclass=utils.Singleton):
+class DatabaseBlueprintSerializer(metaclass=Singleton):
     def __init__(self) -> None:
-        self._table_serializer = TableTypeSerializer()
+        self._table_serializer = TableBlueprintSerializer()
 
     def serialize(self, db_name: str, blueprints: list[blueprint.TableBlueprint]) -> None:
         for blueprint in blueprints:
             self._table_serializer.serialize(db_name, blueprint)
 
 
-class TableTypeDeserializer:
+class TableBlueprintDeserializer:
     def __init__(self) -> None:
         pass
 
@@ -74,13 +75,13 @@ class TableTypeDeserializer:
         return blueprint.TableBlueprint(file.split("/")[-1].split(".")[0], attributes)
 
 
-class DatabaseTypeDeserializer(metaclass=utils.Singleton):
+class DatabaseBlueprintDeserializer(metaclass=Singleton):
     def __init__(self) -> None:
-        self._table_deserializer = TableTypeDeserializer()
+        self._table_deserializer = TableBlueprintDeserializer()
 
     def deserialize(self, db_name: str) -> list[blueprint.TableBlueprint]:
         db_path = f"{properties.CONFIG_DIRECTORY}/{db_name}"
-        files = os.listdir(db_path)
+        files = function.get_json_files_in_dir(db_path)
         res: list[blueprint.TableBlueprint] = []
         for file in files:
             res.append(self._table_deserializer.deserialize(f"{db_path}/{file}"))

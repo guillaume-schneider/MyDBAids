@@ -1,5 +1,5 @@
-from utils import Singleton
-from stream.serializer import TableTypeSerializer
+from mysqlgen.utils.pattern import Singleton
+from mysqlgen.stream.blueprint import TableBlueprintSerializer
 import properties
 import os
 import json
@@ -9,8 +9,8 @@ class Initializer(metaclass=Singleton):
     def __init__(self):
         self._tables = []
         self._create_directory(properties.CONFIG_DIRECTORY)
-        self._create_json_file(TableTypeSerializer.DEFAULT_FILE_TYPE, 
-                               TableTypeSerializer.DEFAULT_TYPE_MATCH)
+        self._create_json_file(TableBlueprintSerializer.DEFAULT_FILE_TYPE, 
+                               TableBlueprintSerializer.DEFAULT_TYPE_MATCH)
 
     def _create_directory(self, directory: str) -> None:
         if not os.path.exists(directory):
