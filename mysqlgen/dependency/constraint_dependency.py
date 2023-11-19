@@ -1,4 +1,4 @@
-from mysqlgen.dependency.dfs import DFS
+from mysqlgen.dependency.topologicaL_sort import SortByDetph
 import re
 
 
@@ -19,7 +19,7 @@ class TableOrderFetcher:
             referenced_tables = set(fk[1] for fk in foreign_keys)
             self.dependency_graph[table_name] = referenced_tables
 
-        order = DFS.topological_sort(self.dependency_graph)
+        order = SortByDetph.sort(self.dependency_graph)
 
         return order
 

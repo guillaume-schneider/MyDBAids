@@ -1,4 +1,5 @@
 import mysql.connector
+import mysqlgen.db.abstract.abstract_type as abstract
 
 
 class TableBlueprint:
@@ -50,7 +51,28 @@ class TableBlueprintMaker:
         table_blueprint = TableBlueprint(table_name)
         for column in columns:
             table_blueprint.add_attribute(column[0], column[1])
+    
+        self.change_constraint_attribute(table_blueprint)
         return table_blueprint
+
+    def change_constraint_attribute(self, table_blueprint: TableBlueprint) -> None:
+        try:
+            self.cursor.execute(self._get_constraint_query(table_blueprint.name))
+        except mysql.connector.Error as err:
+            print(f"Erreur lors de la requête SQL pour obtenir les contraintes de la table {table_blueprint.name}: {err}")
+
+        constraints = self.cursor.fetchall()
+        for constraint in constraints:
+            if constraint[1] == "PRIMARY":
+                table_blueprint.add_attribute(constraint[0], abstract.AbstractType.AUTO_ID.name.lower())
+            else:
+                table_blueprint.add_attribute(constraint[0], abstract.AbstractType.PRIMARY_ID.name.lower())
+
+    def _get_constraint_query(self, table_name: str):
+        return f"""SELECT COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+                   FROM information_schema.KEY_COLUMN_USAGE
+                   WHERE TABLE_SCHEMA = '{self.config['database']}'
+                                        AND TABLE_NAME = '{table_name}';"""
 
     def _get_column_query(self, table_name: str):
         return f"""SELECT COLUMN_NAME, DATA_TYPE

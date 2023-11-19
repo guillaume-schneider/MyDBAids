@@ -4,6 +4,7 @@ from mysqlgen.utils.pattern import Singleton
 import os
 import mysqlgen.properties as properties
 from mysqlgen.utils import function
+import mysqlgen.db.verificator as verificator
 
 
 class TableBlueprintSerializer:
@@ -24,6 +25,8 @@ class TableBlueprintSerializer:
         "int": "int",
         "bigint": "int",
         "year": "int",
+        "auto_id": "auto_id",
+        "primary_id": "primary_id"
     }
 
     def __init__(self) -> None:
@@ -33,6 +36,10 @@ class TableBlueprintSerializer:
         db_path = f"{properties.CONFIG_DIRECTORY}/{db_name}"
         if not os.path.exists(db_path):
             os.mkdir(db_path)
+        
+        file_path = f"{db_path}/{blueprint.name}.json"
+        if os.path.exists(file_path):
+            return file_path
 
         self._serialize_types = {}
         self._types = self._get_default_types_match()
@@ -40,7 +47,6 @@ class TableBlueprintSerializer:
         for (name, type) in blueprint.attributes.items():
             self._serialize_types[name] = self._types[type]
 
-        file_path = f"{db_path}/{blueprint.name}.json"
         if file_path not in os.listdir(db_path):
             self._create_json_file(file_path, self._serialize_types)
 
@@ -72,7 +78,9 @@ class TableBlueprintDeserializer:
         attributes: dict
         with open(file, "r") as f:
             attributes = json.load(f)
-        return blueprint.TableBlueprint(file.split("/")[-1].split(".")[0], attributes)
+        res = blueprint.TableBlueprint(file.split("/")[-1].split(".")[0], attributes)
+        verificator.BlueprintVerificator.verify(res)
+        return res
 
 
 class DatabaseBlueprintDeserializer(metaclass=Singleton):

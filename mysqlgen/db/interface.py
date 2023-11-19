@@ -1,8 +1,6 @@
 from mysqlgen.db import blueprint
 import mysqlgen.stream.blueprint as blueprintSerializer
 import mysqlgen.stream.dependency as dependencySerializer
-import mysqlgen.db.maker as maker
-import mysqlgen.db.generator as generator
 import mysqlgen.db.connector.injector as connectorInjector
 import mysql.connector
 
@@ -16,20 +14,27 @@ class DBInterface:
         self.database_name = database
         self.serializer = blueprintSerializer.DatabaseBlueprintSerializer()
 
+        self._init()
+
+    def _init(self):
         self.connection = mysql.connector.connect(user=self.user,
                                                   password=self.password,
                                                   host=self.host,
                                                   database=self.database_name,
-                                                  raise_on_warnings=True)
+                                                  raise_on_warnings=True,
+                                                  buffered=True)
         self.blueprints = blueprint.DatabaseBlueprintMaker(self._get_config(),
                                                            self.connection.cursor()) \
                                    .get_database_blueprint()
         self.dependency_serializer = dependencySerializer.DependencySerializer(self.connection.cursor(), 
                                                                                self.database_name)
-        self.injector = connectorInjector.InjectorOnFly(self.connection.cursor())
+        self.injector = connectorInjector.InjectorOnFly(self.connection,
+                                                        self.connection.cursor())
 
-    def change_database(self, database_name: str) -> None:
+    def change_database(self, database_name: str):
         self.database_name = database_name
+        self._init()
+        return self._get_database_name()
 
     def init(self):
         blueprintSerializer.DatabaseBlueprintSerializer().serialize(self.database_name,
@@ -40,13 +45,23 @@ class DBInterface:
  
     def update(self):
         self.blueprints = blueprintSerializer.DatabaseBlueprintDeserializer() \
-                                    .deserialize(self.database_name)
+                                             .deserialize(self.database_name)
 
     def inject(self, nb_insertions: int):
-        self.injector.injectAll(self.blueprints, nb_insertions)
+        order = dependencySerializer.DependencyDeserializer().deserialize_order(self.database_name)
+        self.injector.injectAll(self.blueprints, nb_insertions, order)
 
     def delete_injected_data(self):
-        pass
+        order = dependencySerializer.DependencyDeserializer().deserialize_order(self.database_name)
+        self.injector.delete_injected_data(self.blueprints, order)
+
+    def _get_database_name(self):
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT DATABASE()")
+        current_database = cursor.fetchone()[0]
+
+        cursor.close()
+        return current_database
 
     def _get_config(self):
         return {

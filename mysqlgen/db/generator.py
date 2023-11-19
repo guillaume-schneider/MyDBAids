@@ -3,29 +3,27 @@ from typing import Any
 import mysqlgen.db.blueprint as blueprint
 from mysqlgen.utils.pattern import Singleton
 import faker
+import mysqlgen.db.abstract.abstract_type as abstract
 
 
 class DataGenerator(metaclass=Singleton):
 
     def __init__(self) -> None:
-        self.ID_COUNTER = 0
         pass
 
     def generate(self, blueprint: blueprint.TableBlueprint, nb_insertion: int) -> str:
-        self.ID_COUNTER = 0
         names = self._get_names_field_str(blueprint)
-        res = f"INSERT INTO {blueprint.name} ({names}) VALUES "
+        res = f"INSERT INTO `{blueprint.name}` ({names}) VALUES "
         for i in range(nb_insertion):
-            res += f"({self._get_values_field_str(blueprint)}), "    
+            res += f"({self._get_values_field_str(blueprint, i + 1)}), "    
         res = res[:-2] + ";\n"
         return res
 
-    def _get_values_field_str(self, table: blueprint.TableBlueprint) -> str:
+    def _get_values_field_str(self, table: blueprint.TableBlueprint, id_batch: int) -> str:
         values = ""
         for (name_attr, type_attr) in table.attributes.items():
-            if type_attr == "primary_id":
-                generated_data = self.ID_COUNTER
-                self.ID_COUNTER += 1
+            if type_attr == abstract.AbstractType.PRIMARY_ID.name.lower():
+                generated_data = id_batch
             else:
                 generated_data = _DataGeneratorMatcher().generate(type_attr)
             values += f"{generated_data}, "
@@ -46,9 +44,9 @@ class _DataGeneratorMatcher(metaclass=Singleton):
     def generate(self, abstract_data_type: str) -> Any:
         match(abstract_data_type):
             case "float":
-                return self._raw_gen.generate("float", (0, 100))
+                return self._raw_gen.generate("float", (0.0, 9.0))
             case "int":
-                return self._raw_gen.generate("int", (0, 100))
+                return self._raw_gen.generate("int", (0, 9))
             case "boolean":
                 return self._raw_gen.generate("boolean", None)
             case _:
@@ -93,7 +91,7 @@ class _RawDataGenerator():
             case "boolean":
                 return random.choice([True, False])
 
-    def _generate_float(self, range: tuple[int, int]) -> float:
+    def _generate_float(self, range: tuple[float, float]) -> float:
         return random.random() * random.randint(range[0], range[1])
 
     def _generate_int(self, range: tuple[int, int]) -> int:

@@ -8,5 +8,6 @@ setup(name='mysql-generator-value',
       author='Guillaume SCHNEIDER',
       author_email='guillaumeschneider@siggraph.org',
       packages=['mysqlgen', "mysqlgen.db", "mysqlgen.db.connector",
-                "mysqlgen.stream"],
+                "mysqlgen.stream", "mysqlgen.dependency", 
+                "mysqlgen.db.abstract",],
      )

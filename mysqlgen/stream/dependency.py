@@ -3,6 +3,7 @@ from mysqlgen.dependency import constraint_dependency
 import json
 import mysqlgen.properties as properties
 import os
+import mysqlgen.utils.pattern as pattern
 
 
 class DependencySerializer:
@@ -15,7 +16,6 @@ class DependencySerializer:
     def serialize(self) -> None:
         order = self.table_order_fetcher.get_order()
         self._init()
-        print(self.table_order_fetcher.dependency_graph)
         self._serialize(order,
                         set_to_dict(self.table_order_fetcher.dependency_graph))
 
@@ -40,3 +40,18 @@ class DependencySerializer:
         if not os.path.exists(dependency_file_path):
             with open(dependency_file_path, "w") as f:
                 json.dump(dependency, f, indent=4)
+
+
+class DependencyDeserializer(metaclass=pattern.Singleton):
+    def __init__(self) -> None:
+        pass
+
+    def deserialize_dependency(self, db_name: str) -> list[str]:
+        dependency_path = f"{properties.CONFIG_DIRECTORY}/{db_name}/dependency/dependency.json"
+        with open(dependency_path, "r") as f:
+            return json.load(f)
+
+    def deserialize_order(self, db_name: str) -> list[str]:
+        order_path = f"{properties.CONFIG_DIRECTORY}/{db_name}/order/order.json"
+        with open(order_path, "r") as f:
+            return json.load(f)

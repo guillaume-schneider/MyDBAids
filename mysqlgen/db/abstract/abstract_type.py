@@ -12,6 +12,8 @@ class AbstractType(Enum):
     BOOLEAN = 8
     INT = 9
     FLOAT = 10
+    PRIMARY_ID = 11
+    AUTO_ID = 12
 
 
 AbstractTypeFunctionMatch = {
@@ -22,8 +24,6 @@ AbstractTypeFunctionMatch = {
     AbstractType.LOREM: "lorem",
     AbstractType.PERSON: "person",
     AbstractType.PHONE_NUMBER: "phone_number",
-    AbstractType.PRIMARY_ID: "primary_id",
+    AbstractType.PRIMARY_ID: "increment_id",
+    AbstractType.AUTO_ID: "auto_id"
 }
-
-
-print(AbstractTypeFunctionMatch.__getitem__(0))
