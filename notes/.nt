@@ -1,0 +1,7 @@
+problemes actuels:
+    - taille des paquets possible (voir avec executemany()) à max 1000 injection
+    - probleme au niveau du manager de script (revenir sur une commande en arriere)
+    - probleme passage d'argument interdit (init 10000)
+    - obliger de passer par init pour lancer inject
+    - ne peut pas inject quand des valeurs sont deja presentes (probleme d'id, start à id=1)
+    reprendre l'id deja existant
