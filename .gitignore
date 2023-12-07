@@ -1,5 +1,5 @@
 venv
 __pycache__
 config
-mdba.egg-info
+**.egg-info
 build
