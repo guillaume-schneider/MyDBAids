@@ -23,7 +23,7 @@ MyDBAids can be used for various database operations. Here are some common comma
 ### Connect to a Database:
 
    ```bash
-   mysqlgen --user [username] --hostname [hostname] --password [password] --database [database]
+   mdba --user [username] --hostname [hostname] --password [password] --database [database]
    ```
 
 ### Initialize Blueprint Generation:
