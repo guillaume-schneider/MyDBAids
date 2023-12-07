@@ -41,7 +41,7 @@ MyDBAids can be used for various database operations. Here are some common comma
 ### Update Abstract Type:
 
    ```bash
-    mdba update
+   mdba update
    ```
 
 ## Customizing Data Generation
