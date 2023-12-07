@@ -1,7 +1,7 @@
 # MyDBAids (MDBA)
 
 ## Overview
-MyDBAids is a Python-based tool designed for generating MySQL data and managing MySQL databases. It offers a command-line interface for real-time interactions, allowing users to generate abstract data types like addresses, names, dates, and paragraphs. The tool intelligently handles complex database constraints and provides functionalities for database blueprint generation, custom modification, serialization, and more.
+MyDBAids is a Python-based tool designed for generating data and managing databases. It offers a command-line interface for real-time interactions, allowing users to generate abstract data types like addresses, names, dates, and paragraphs. The tool intelligently handles complex database constraints and provides functionalities for database blueprint generation, custom modification, serialization, and more.
 
 ## Running the Tool
 To use MyDBAids, you simply need to run it from the source code:
