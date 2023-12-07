@@ -1,9 +1,9 @@
-from mdba.utils.function import set_to_dict
-from mdba.dependency import constraint_dependency
+from mydbaids.utils.function import set_to_dict
+from mydbaids.dependency import constraint_dependency
 import json
-import mdba.properties as properties
+import mydbaids.properties as properties
 import os
-import mdba.utils.pattern as pattern
+import mydbaids.utils.pattern as pattern
 
 
 class DependencySerializer:

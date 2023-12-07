@@ -1,7 +1,7 @@
-from mdba.initializer import Initializer
-from mdba.db.interface import DBInterface
-from mdba.cli.connect import ConnectorCLI
-from mdba.cli.scripting import RealTimeCLI
+from mydbaids.initializer import Initializer
+from mydbaids.db.interface import DBInterface
+from mydbaids.cli.connect import ConnectorCLI
+from mydbaids.cli.scripting import RealTimeCLI
 
 
 def main():

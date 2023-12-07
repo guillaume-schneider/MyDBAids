@@ -1,5 +1,5 @@
-import mdba.db.objects as objects
-import mdba.stream.types_fetcher as fetcher
+import mydbaids.db.objects as objects
+import mydbaids.stream.types_fetcher as fetcher
 
 
 @DeprecationWarning

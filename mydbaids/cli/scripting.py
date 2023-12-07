@@ -1,4 +1,4 @@
-from mdba.utils.pattern import Singleton
+from mydbaids.utils.pattern import Singleton
 
 
 class RealTimeCLI(metaclass=Singleton):

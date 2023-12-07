@@ -1,5 +1,5 @@
 import mysql.connector
-import mdba.db.abstract.abstract_type as abstract
+import mydbaids.db.abstract.abstract_type as abstract
 
 
 class TableBlueprint:

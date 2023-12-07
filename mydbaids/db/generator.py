@@ -1,9 +1,9 @@
 import random
 from typing import Any
-import mdba.db.blueprint as blueprint
-from mdba.utils.pattern import Singleton
+import mydbaids.db.blueprint as blueprint
+from mydbaids.utils.pattern import Singleton
 import faker
-import mdba.db.abstract.abstract_type as abstract
+import mydbaids.db.abstract.abstract_type as abstract
 
 
 class DataGenerator(metaclass=Singleton):

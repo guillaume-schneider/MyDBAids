@@ -1,10 +1,10 @@
 import json
-import mdba.db.blueprint as blueprint
-from mdba.utils.pattern import Singleton
+import mydbaids.db.blueprint as blueprint
+from mydbaids.utils.pattern import Singleton
 import os
-import mdba.properties as properties
-from mdba.utils import function
-import mdba.db.verificator as verificator
+import mydbaids.properties as properties
+from mydbaids.utils import function
+import mydbaids.db.verificator as verificator
 
 
 class TableBlueprintSerializer:

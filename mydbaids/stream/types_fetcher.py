@@ -1,6 +1,6 @@
 import json
 import os
-import mdba.properties as proprieties
+import mydbaids.properties as proprieties
 
 
 @DeprecationWarning

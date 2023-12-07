@@ -1,7 +1,7 @@
-from mdba.utils.pattern import Singleton
-from mdba.stream.blueprint import TableBlueprintSerializer
-import mdba.cli.scripting as scripting
-import mdba.cli.script.commands as commands
+from mydbaids.utils.pattern import Singleton
+from mydbaids.stream.blueprint import TableBlueprintSerializer
+import mydbaids.cli.scripting as scripting
+import mydbaids.cli.script.commands as commands
 import properties
 import os
 import json

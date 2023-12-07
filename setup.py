@@ -2,7 +2,7 @@
 
 from distutils.core import setup
 
-setup(name='mdba',
+setup(name='mydbaids',
       version='1.0',
       description='MyDBAids is a dynamic Python tool designed for efficient data'
                   + 'generation and management. Featuring an intuitive command-line'
@@ -11,7 +11,7 @@ setup(name='mdba',
                    + 'making it an essential tool for developers and database professionals.',
       author='Guillaume SCHNEIDER',
       author_email='guillaumeschneider@siggraph.org',
-      packages=['mdba', "mdba.db", "mdba.db.connector",
-                "mdba.stream", "mdba.dependency", 
-                "mdba.db.abstract",],
+      packages=['mydbaids', "mydbaids.db", "mydbaids.db.connector",
+                "mydbaids.stream", "mydbaids.dependency", 
+                "mydbaids.db.abstract",],
 )

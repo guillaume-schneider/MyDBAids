@@ -1,6 +1,6 @@
-import mdba.db.generator as generator
-import mdba.db.blueprint as blueprint
-import mdba.db.objects as objects
+import mydbaids.db.generator as generator
+import mydbaids.db.blueprint as blueprint
+import mydbaids.db.objects as objects
 
 
 @DeprecationWarning

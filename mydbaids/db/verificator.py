@@ -1,5 +1,5 @@
-import mdba.db.blueprint as blueprint
-import mdba.db.abstract.abstract_type as abstract
+import mydbaids.db.blueprint as blueprint
+import mydbaids.db.abstract.abstract_type as abstract
 
 
 class BlueprintVerificator:
