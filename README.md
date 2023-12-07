@@ -8,14 +8,14 @@ To use MySQL Generator Value, you simply need to run it from the source code:
 
 1. Clone the repository or download the source code.
 2. Install the dependencies by running:
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 4. Navigate to the project directory.
 5. Run the tool using Python. For example:
-  ```bash
-  python main.py
-  ```
+```bash
+python main.py
+```
 
 ## Usage
 MySQL Generator Value can be used for various database operations. Here are some common commands:
