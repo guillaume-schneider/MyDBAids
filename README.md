@@ -9,8 +9,8 @@ To use MySQL Generator Value, you simply need to run it from the source code:
 1. Clone the repository or download the source code.
 2. Navigate to the project directory.
 3. Run the tool using Python. For example:
-   ```bash
-   python main.py
+  ```bash
+  python main.py
   ```
 
 Replace main.py with the appropriate entry point script if it's different.
