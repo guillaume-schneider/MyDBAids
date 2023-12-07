@@ -50,6 +50,9 @@ MySQL Generator Value can be used for various database operations. Here are some
 2. Modify the JSON blueprints to conform to the data you want to generate.
 3. The tool will read and serialize these blueprints for data generation.
 
+## Documentation
+For more detailed information, usage guides, and advanced topics, please visit our [MySQL Generator Value Wiki](https://github.com/your-github-username/mysql-generator-value/wiki).
+
 ## Author
 Guillaume SCHNEIDER
 
