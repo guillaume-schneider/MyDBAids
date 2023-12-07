@@ -12,6 +12,7 @@ To install MySQL Generator Value, follow these steps:
 
 ```bash
 python setup.py install
+```
 
 
 This will install the package along with its dependencies.
@@ -23,21 +24,25 @@ MySQL Generator Value can be used for various database operations. Here are some
 
   ```bash
   mysqlgen --user [username] --hostname [hostname] --password [password] --database [database]
+  ```
 
 - **Initialize Blueprint Generation:**
 
   ```bash
   mysqlgen init
+  ```
 
 - **Inject Data:**
 
   ```bash
   mysqlgen inject [nb_data]
+  ```
 
 - **Update Abstract Type:**
 
   ```bash
   mysqlgen update
+  ```
 
 
 ## Customizing Data Generation
