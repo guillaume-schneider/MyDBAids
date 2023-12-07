@@ -13,8 +13,6 @@ To use MySQL Generator Value, you simply need to run it from the source code:
   python main.py
   ```
 
-Replace main.py with the appropriate entry point script if it's different.
-
 ## Usage
 MySQL Generator Value can be used for various database operations. Here are some common commands:
 
