@@ -1,7 +1,7 @@
-from mysqlgen.utils.pattern import Singleton
-from mysqlgen.stream.blueprint import TableBlueprintSerializer
-import mysqlgen.cli.scripting as scripting
-import mysqlgen.cli.script.commands as commands
+from mdba.utils.pattern import Singleton
+from mdba.stream.blueprint import TableBlueprintSerializer
+import mdba.cli.scripting as scripting
+import mdba.cli.script.commands as commands
 import properties
 import os
 import json

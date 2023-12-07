@@ -1,4 +1,4 @@
-from mysqlgen.dependency.topologicaL_sort import SortByDetph
+from mdba.dependency.topologicaL_sort import SortByDetph
 import re
 
 

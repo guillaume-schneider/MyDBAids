@@ -1,10 +1,10 @@
 import json
-import mysqlgen.db.blueprint as blueprint
-from mysqlgen.utils.pattern import Singleton
+import mdba.db.blueprint as blueprint
+from mdba.utils.pattern import Singleton
 import os
-import mysqlgen.properties as properties
-from mysqlgen.utils import function
-import mysqlgen.db.verificator as verificator
+import mdba.properties as properties
+from mdba.utils import function
+import mdba.db.verificator as verificator
 
 
 class TableBlueprintSerializer:

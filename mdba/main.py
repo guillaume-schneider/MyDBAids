@@ -1,7 +1,7 @@
-from mysqlgen.initializer import Initializer
-from mysqlgen.db.interface import DBInterface
-from mysqlgen.cli.connect import ConnectorCLI
-from mysqlgen.cli.scripting import RealTimeCLI
+from mdba.initializer import Initializer
+from mdba.db.interface import DBInterface
+from mdba.cli.connect import ConnectorCLI
+from mdba.cli.scripting import RealTimeCLI
 
 
 def main():

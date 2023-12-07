@@ -1,6 +1,6 @@
 import json
 import os
-import mysqlgen.properties as proprieties
+import mdba.properties as proprieties
 
 
 @DeprecationWarning

@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: mdba
+Version: 1.0
+Summary: MyDBAids is a dynamic Python tool designed for efficient datageneration and management. Featuring an intuitive command-lineinterface, it allows seamless creation of custom data blueprintsand leverages the Faker library for authentic data simulation,making it an essential tool for developers and database professionals.
+Author: Guillaume SCHNEIDER
+Author-email: guillaumeschneider@siggraph.org
+License-File: LICENSE

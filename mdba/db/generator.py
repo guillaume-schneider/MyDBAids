@@ -1,9 +1,9 @@
 import random
 from typing import Any
-import mysqlgen.db.blueprint as blueprint
-from mysqlgen.utils.pattern import Singleton
+import mdba.db.blueprint as blueprint
+from mdba.utils.pattern import Singleton
 import faker
-import mysqlgen.db.abstract.abstract_type as abstract
+import mdba.db.abstract.abstract_type as abstract
 
 
 class DataGenerator(metaclass=Singleton):

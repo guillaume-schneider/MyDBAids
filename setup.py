@@ -2,12 +2,16 @@
 
 from distutils.core import setup
 
-setup(name='mysql-generator-value',
+setup(name='mdba',
       version='1.0',
-      description='Python MySQL data Generator',
+      description='MyDBAids is a dynamic Python tool designed for efficient data'
+                  + 'generation and management. Featuring an intuitive command-line'
+                  + 'interface, it allows seamless creation of custom data blueprints' 
+                  + 'and leverages the Faker library for authentic data simulation,'
+                   + 'making it an essential tool for developers and database professionals.',
       author='Guillaume SCHNEIDER',
       author_email='guillaumeschneider@siggraph.org',
-      packages=['mysqlgen', "mysqlgen.db", "mysqlgen.db.connector",
-                "mysqlgen.stream", "mysqlgen.dependency", 
-                "mysqlgen.db.abstract",],
-     )
+      packages=['mdba', "mdba.db", "mdba.db.connector",
+                "mdba.stream", "mdba.dependency", 
+                "mdba.db.abstract",],
+)

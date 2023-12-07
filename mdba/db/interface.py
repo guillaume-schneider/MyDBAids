@@ -1,7 +1,7 @@
-from mysqlgen.db import blueprint
-import mysqlgen.stream.blueprint as blueprintSerializer
-import mysqlgen.stream.dependency as dependencySerializer
-import mysqlgen.db.connector.injector as connectorInjector
+from mdba.db import blueprint
+import mdba.stream.blueprint as blueprintSerializer
+import mdba.stream.dependency as dependencySerializer
+import mdba.db.connector.injector as connectorInjector
 import mysql.connector
 
 

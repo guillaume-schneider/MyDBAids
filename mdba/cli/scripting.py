@@ -1,4 +1,4 @@
-from mysqlgen.utils.pattern import Singleton
+from mdba.utils.pattern import Singleton
 
 
 class RealTimeCLI(metaclass=Singleton):

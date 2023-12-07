@@ -1,5 +1,5 @@
-import mysqlgen.db.blueprint as blueprint
-import mysqlgen.db.abstract.abstract_type as abstract
+import mdba.db.blueprint as blueprint
+import mdba.db.abstract.abstract_type as abstract
 
 
 class BlueprintVerificator:

@@ -1,6 +1,6 @@
-import mysqlgen.db.generator as generator
-import mysqlgen.db.blueprint as blueprint
-import mysqlgen.db.objects as objects
+import mdba.db.generator as generator
+import mdba.db.blueprint as blueprint
+import mdba.db.objects as objects
 
 
 @DeprecationWarning

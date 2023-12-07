@@ -1,9 +1,9 @@
-from mysqlgen.utils.function import set_to_dict
-from mysqlgen.dependency import constraint_dependency
+from mdba.utils.function import set_to_dict
+from mdba.dependency import constraint_dependency
 import json
-import mysqlgen.properties as properties
+import mdba.properties as properties
 import os
-import mysqlgen.utils.pattern as pattern
+import mdba.utils.pattern as pattern
 
 
 class DependencySerializer:
