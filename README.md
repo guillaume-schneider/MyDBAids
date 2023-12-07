@@ -20,19 +20,23 @@ MySQL Generator Value can be used for various database operations. Here are some
 
 - **Connect to a Database:**
 
+  ```bash
 mysqlgen --user [username] --hostname [hostname] --password [password] --database [database]
 
 
 - **Initialize Blueprint Generation:**
 
+  ```bash
 mysqlgen init
 
 - **Inject Data:**
 
+  ```bash
 mysqlgen inject [nb_data]
 
 - **Update Abstract Type:**
 
+  ```bash
 mysqlgen update
 
 
